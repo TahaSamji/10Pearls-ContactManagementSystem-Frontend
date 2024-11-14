@@ -7,18 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_USER } from '../redux/actions/UserAction';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+
 
 const PaperContainer = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(8),
@@ -86,11 +75,13 @@ export default function SignIn() {
             
             console.log(res.data);
             window.alert(res.data.message);
+            localStorage.setItem('jwtToken', res.data.token);
+            localStorage.setItem('userId', res.data.userId);
             dispatch(
              
                 {
                     type: LOGIN_USER,
-                    payload : {token:res.data.token,userDetails:{email:res.data.username}}
+                    payload : {token:res.data.token,userDetails:{email:res.data.username,userId:res.data.userId}}
                
             
             
@@ -142,6 +133,7 @@ export default function SignIn() {
                                 id="password"
                                 label="Pasword"
                                 name="password"
+                                type="password"
                                 onChange={handleInputChange}
                                 value={data.password}
                                 autoComplete="password"
@@ -166,17 +158,17 @@ export default function SignIn() {
                         </Grid2> */}
                     </Grid2>
                    
-                    <Grid2 container justifyContent="flex-end">
+                    <Grid2 container justifyContent="flex-end" marginTop={1}>
                         <Grid2 item>
+                        Dont have an account? 
                             <Link href="/signup" variant="body2">
-                                Dont have an account? SignUp
+                                 SignUp
                             </Link>
                         </Grid2>
                     </Grid2>
                 </Form>
             </PaperContainer>
             <Box mt={5}>
-                <Copyright />
             </Box>
         </Container>
     );

@@ -6,9 +6,11 @@ import SignIn from "./auth/SignIn";
 
 
 import HomePage from "./Components/HomePage";
+import MainPage from "./Components/MainPage";
 
 function App() {
   return (
+  
     <Router>
         <Routes>
           <Route path="/signin" element={<SignIn />} />

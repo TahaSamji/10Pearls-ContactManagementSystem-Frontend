@@ -155,10 +155,11 @@ export default function SignUp() {
                     >
                         Sign Up
                     </Button>
-                    <Grid2 container justifyContent="flex-end">
+                    <Grid2 container justifyContent="flex-end" marginTop={1}>
                         <Grid2 item>
+                        Already have an account?
                             <Link href="/signin" variant="body2">
-                                Already have an account? Sign in
+                               Sign in
                             </Link>
                         </Grid2>
                     </Grid2>

@@ -9,7 +9,7 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 
-const UpdateContactModal = ({ open, handleClose,newdata }) => {
+const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
 
     
     
@@ -17,11 +17,11 @@ const UpdateContactModal = ({ open, handleClose,newdata }) => {
         profileId : newdata.profileId,
         firstName: newdata.firstName,
         lastName: newdata.lastName,
-        workEmail: newdata.workEmailAddress,
-        personalEmail: newdata.personalEmailAddress,
-        workNumber: newdata.workPhoneNumber,
-        homeNumber: newdata.homePhoneNumber,
-        personalNumber: newdata.personalPhoneNumber,
+        workEmailAddress: newdata.workEmailAddress,
+        personalEmailAddress: newdata.personalEmailAddress,
+        workPhoneNumber: newdata.workPhoneNumber,
+        homePhoneNumber: newdata.homePhoneNumber,
+        personalPhoneNumber: newdata.personalPhoneNumber,
         title: newdata.title
     });
         useEffect(() => {
@@ -60,6 +60,8 @@ const UpdateContactModal = ({ open, handleClose,newdata }) => {
            if(res.status == 200){
             window.alert("Contact Update Succesfully")
             console.log("update data",res.data);
+            handleRender();
+            handleClose();
             return;
 
            }}
@@ -94,7 +96,6 @@ const UpdateContactModal = ({ open, handleClose,newdata }) => {
                     <Card sx={{ p: 5 }}>
                         <CardHeader subheader="The information can be edited" title="Edit Contact" />
                          <Divider/>
-                       
                          <CardContent>
                             <Grid2 container spacing={3}>
                                 <Grid2 sx={{ marginBottom: 1 }} md={6} xs={12}>
@@ -112,14 +113,14 @@ const UpdateContactModal = ({ open, handleClose,newdata }) => {
                                 <Grid2 md={12} xs={24}>
                                     <FormControl fullWidth>
                                         <InputLabel>Personal Email</InputLabel>
-                                        <OutlinedInput label=" Personal Email Address" name="personalEmail" type="text" onChange={handleInputChange} defaultValue={data.personalEmail}
-                                            value={data.personalEmail} />
+                                        <OutlinedInput label=" Personal Email Address" name="personalEmailAddress" type="text" onChange={handleInputChange} defaultValue={data.personalEmailAddress}
+                                            value={data.personalEmaiAddressl} />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={12} xs={24}>
                                     <FormControl fullWidth>
                                         <InputLabel>Work Email</InputLabel>
-                                        <OutlinedInput label="Work Email Address" name="workEmail" type="text" onChange={handleInputChange} defaultValue={data.workEmail}
+                                        <OutlinedInput label="Work Email Address" name="workEmailAddress" type="text" onChange={handleInputChange} defaultValue={data.workEmailAddress}
                                             value={data.workEmail} />
                                     </FormControl>
                                 </Grid2>
@@ -127,19 +128,19 @@ const UpdateContactModal = ({ open, handleClose,newdata }) => {
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Personal Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={data.personalNumber} onChange={handleInputChange} value={data.personalNumber} label="Personal Phone Number" name="personalNumber" />
+                                        <OutlinedInput type='Number' defaultValue={data.personalPhoneNumber} onChange={handleInputChange} value={data.personalPhoneNumber} label="Personal Phone Number" name="personalPhoneNumber" />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Work Phone Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={data.workNumber} onChange={handleInputChange} value={data.workNumber} label="work Phone Number" name="workNumber" />
+                                        <OutlinedInput type='Number' defaultValue={data.workPhoneNumber} onChange={handleInputChange} value={data.workPhoneNumber} label="work Phone Number" name="workPhoneNumber" />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>home Phone Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={data.homeNumber} onChange={handleInputChange} value={data.homeNumber} label="home Phone Number" name="homeNumber" />
+                                        <OutlinedInput type='Number' defaultValue={data.homePhoneNumber} onChange={handleInputChange} value={data.homePhoneNumber} label="home Phone Number" name="homePhoneNumber" />
                                     </FormControl>
                                 </Grid2>
 

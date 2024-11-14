@@ -1,69 +1,40 @@
-// EditProjectModal.js
 import axios from 'axios';
 import React from 'react';
 import { Button, Modal, Typography, Card, CardHeader, Divider, Grid, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
 import { Box } from '@mui/material';
-// import { useAppSelector } from '@/app/Redux/store';
-// import { Project } from './projects';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { Stack } from '@mui/system';
+import ManIcon from '../assests/man.png';
 
 
-const AddContactModal = ({ open, handleRender,handleClose }) => {
-    const [newContact, setNewContact] = useState({
-        firstName: "Mike",
-        lastName: "Brown",
-        workEmailAddress: "mike@example.com",
-        personalEmailAddress: "d",
-        workPhoneNumber: 1122334455,
-        homePhoneNumber: 1234567890,
-        personalPhoneNumber: 9876543210,
-        title: "Engineer"
+const ViewContactModal = ({ open, handleRender, handleClose, newdata }) => {
+    const [data, SetNewData] = useState({
+        profileId: newdata.profileId,
+        firstName: newdata.firstName,
+        lastName: newdata.lastName,
+        workEmailAddress: newdata.workEmailAddress,
+        personalEmailAddress: newdata.personalEmailAddress,
+        workPhoneNumber: newdata.workPhoneNumber,
+        homePhoneNumber: newdata.homePhoneNumber,
+        personalPhoneNumber: newdata.personalPhoneNumber,
+        title: newdata.title
     });
-    const token = useSelector((state) => state.user.token);
-  
-
-
 
     useEffect(() => {
-
-        console.log("this is Data", newContact);
-        console.log("this is token", token);
-    }, [newContact]);
+        console.log("this is Data", data);
+    }, [data]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setNewContact((prevData) => ({
+        SetNewData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
     };
 
 
-
-    const AddContact = async () => {
-        try {
-            console.log(newContact);
-          const res = await axios({
-            url: `http://localhost:8080/addcontact`,
-            method: "post",
-            data:newContact,
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          });
-           if(res.status == 200){
-            window.alert(res.data);
-            handleRender();
-            return;
-           }
-           } catch (e) {
-          window.alert("ERROR");
-          console.error(e);
-        }
-      };
-
-
+   
     const style = {
         position: 'absolute',
         top: '50%',
@@ -86,69 +57,76 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
             <Box sx={style}>
                 <form onSubmit={(event) => { event.preventDefault(); }}>
                     <Card sx={{ p: 5 }}>
-                        <CardHeader subheader="The information can be edited" title="Add Contact" />
+                        <Stack direction={'column'} spacing={2}>
+                        <Stack direction={'row'} spacing={2}>
+                        <img style={{ width: 60 }} src={ManIcon} alt="User Icon" />
+
+                        <CardHeader title={ data.firstName + " " + data.lastName + "'s Profile"} />
+                        </Stack>
+                        <Stack>
                         <Divider />
                         <CardContent>
                             <Grid2 container spacing={3}>
                                 <Grid2 sx={{ marginBottom: 1 }} md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>First Name</InputLabel>
-                                        <OutlinedInput defaultValue={newContact.firstName} value={newContact.firstName} label="First Name" name="firstName" onChange={handleInputChange} />
+                                        <OutlinedInput defaultValue={data.firstName} value={data.firstName} label="First Name" name="firstName" onChange={handleInputChange} disabled />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Last Name</InputLabel>
-                                        <OutlinedInput defaultValue={newContact.lastName} onChange={handleInputChange} value={newContact.lastName} label="Last Name" name="lastName" />
+                                        <OutlinedInput defaultValue={data.lastName} onChange={handleInputChange} value={data.lastName} label="Last Name" name="lastName" disabled />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={12} xs={24}>
                                     <FormControl fullWidth>
                                         <InputLabel>Personal Email</InputLabel>
-                                        <OutlinedInput label=" Personal Email Address" name="personalEmailAddress" type="text" onChange={handleInputChange} defaultValue={newContact.personalEmailAddress}
-                                            value={newContact.personalEmailAddress} />
+                                        <OutlinedInput label=" Personal Email Address" name="personalEmailAddress" type="text" onChange={handleInputChange} defaultValue={data.personalEmailAddress}
+                                            value={data.personalEmailAddress} disabled />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={12} xs={24}>
                                     <FormControl fullWidth>
                                         <InputLabel>Work Email</InputLabel>
-                                        <OutlinedInput label="Work Email Address" name="workEmailAddress" type="text" onChange={handleInputChange} defaultValue={newContact.workEmailAddress}
-                                            value={newContact.workEmailAddress} />
+                                        <OutlinedInput label="Work Email Address" name="workEmailAddress" type="text" onChange={handleInputChange} defaultValue={data.workEmailAddress}
+                                            value={data.workEmailAddress} disabled />
                                     </FormControl>
                                 </Grid2>
 
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Personal Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={newContact.personalNumber} onChange={handleInputChange} value={newContact.personalNumber} label="Personal Phone Number" name="personalPhoneNumber" />
+                                        <OutlinedInput type='Number' defaultValue={data.personalPhoneNumber} onChange={handleInputChange} value={data.personalPhoneNumber} label="Personal Phone Number" name="personalPhoneNumber" disabled />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Work Phone Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={newContact.workPhoneNumber} onChange={handleInputChange} value={newContact.workPhoneNumber} label="work Phone Number" name="workPhoneNumber" />
+                                        <OutlinedInput type='Number' defaultValue={data.workPhoneNumber} onChange={handleInputChange} value={data.workPhoneNumber} label="work Phone Number" name="workPhoneNumber" disabled />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
-                                        <InputLabel>home Phone Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={newContact.homePhoneNumber} onChange={handleInputChange} value={newContact.homePhoneNumber} label="home Phone Number" name="homePhoneNumber" />
+                                        <InputLabel>Home Phone Number</InputLabel>
+                                        <OutlinedInput type='Number' defaultValue={data.homePhoneNumber} onChange={handleInputChange} value={data.homePhoneNumber} label="home Phone Number" name="homePhoneNumber" disabled />
                                     </FormControl>
                                 </Grid2>
 
                                 <Grid2 md={12} xs={24}>
                                     <FormControl fullWidth>
                                         <InputLabel>Title</InputLabel>
-                                        <OutlinedInput label="Title" name="title" type="text" onChange={handleInputChange} defaultValue={newContact.title}
-                                            value={newContact.title} />
+                                        <OutlinedInput label="Title" name="title" type="text" onChange={handleInputChange} defaultValue={data.title}
+                                            value={data.title} disabled />
                                     </FormControl>
                                 </Grid2>
                             </Grid2>
                         </CardContent>
                         <Divider />
+                        </Stack>
+                        </Stack>
                         <CardActions sx={{ justifyContent: 'flex-end' }}>
-                            <Button onClick={handleClose} variant="contained">Cancel</Button>
-                            <Button onClick={AddContact} variant="contained">Add Contact</Button>
+                            <Button onClick={handleClose} variant="contained">Close</Button>
                         </CardActions>
                     </Card>
                 </form>
@@ -157,4 +135,4 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
     );
 };
 
-export default AddContactModal;
+export default ViewContactModal;

@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppBar, Box, TextField, Typography, InputAdornment, Stack, Button, Toolbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ProfileIcon from '../assests/profile.png';
 import BellIcon from '../assests/bell.png';
+import { useDispatch } from 'react-redux';
+import { PAGE_CHANGE, UPDATE_SEARCH } from '../redux/actions/UserAction';
 
 
 export default function NavBar() {
+  const dispatch = useDispatch();
+  const [value,setValue] = useState("");
 
+  
+  const handleInputChange=(e)=>{
+   setValue(e.target.value);
+   
+  }
+  const SearchContact = ()=>{
+    console.log(value);
+
+    
+    dispatch(
+      {
+      type:UPDATE_SEARCH,
+      payload : {Search:value}
+    } )
+    
+    dispatch(
+    {type:PAGE_CHANGE,
+      payload:{pagetype:"contactPage"}
+    }
+    )
+    
+  }
+  
   return (
     <AppBar position='static' sx={{ backgroundColor: 'white', width: '100wh', justifyContent: 'center' }}>
       <Toolbar  >
@@ -14,8 +41,8 @@ export default function NavBar() {
 
           <Stack direction={'row'} spacing={60} alignItems={'center'}>
             <Stack direction={'row'} spacing={0.5} alignItems={'flex-start'}>
-              <TextField sx={{ borderRadius: '50px', width: 400, "& .MuiInputBase-root": { borderRadius: 45, height: 45 } }} label='Search' />
-              <Button sx={{ borderRadius: '50px', borderColor: 'black' }}><SearchIcon></SearchIcon></Button>
+              <TextField onChange={(e)=>handleInputChange(e)} sx={{ borderRadius: '50px', width: 400, "& .MuiInputBase-root": { borderRadius: 45, height: 45 } }} label='Search' />
+              <Button onClick={SearchContact} sx={{ borderRadius: '50px', borderColor: 'black' }}><SearchIcon></SearchIcon></Button>
 
             </Stack>
             <Stack alignItems={'self-end'} alignContent={'flex-end'} direction={'row'} >

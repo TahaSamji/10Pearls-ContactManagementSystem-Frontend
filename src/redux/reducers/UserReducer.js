@@ -8,7 +8,9 @@ import * as actionTypes from '../actions/UserAction';
 export const initialState = {
   userDetails: {},
   token: "",
-  loggedIn: false
+  loggedIn: false,
+  Search :"",
+  initialPage:"contactPage"
 };
 
 
@@ -22,6 +24,18 @@ const userReducer = (state = initialState, action) => {
         ...action.payload,
         loggedIn: true
       };
+      case actionTypes.PAGE_CHANGE:
+      return {
+        ...state,
+        ...action.payload,
+        initialPage:action.payload.pagetype
+      };
+      case actionTypes.UPDATE_SEARCH:
+        return {
+          ...state,
+          ...action.payload,
+          Search : action.payload.Search
+        };
       case 'UPDATE_USER_DETAILS':
       return {
         ...state,
