@@ -144,7 +144,7 @@ export default function SideBar() {
                     </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding sx={{ marginBottom: 1.5 }}>
-                    <ListItemButton sx={{ paddingY: 1.5, paddingX: 3 }}>
+                    <ListItemButton onClick={handleNavigatetoProfilePage} sx={{ paddingY: 1.5, paddingX: 3 }}>
                         <ListItemIcon><SettingsIcon /></ListItemIcon>
                         <ListItemText primary="Settings" sx={{ fontSize: '1rem' }} />
                     </ListItemButton>
