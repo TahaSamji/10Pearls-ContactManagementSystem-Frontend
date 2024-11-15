@@ -14,7 +14,7 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
         firstName: "Mike",
         lastName: "Brown",
         workEmailAddress: "mike@example.com",
-        personalEmailAddress: "d",
+        personalEmailAddress: "mike@gmail.com",
         workPhoneNumber: 1122334455,
         homePhoneNumber: 1234567890,
         personalPhoneNumber: 9876543210,
@@ -53,8 +53,9 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
             }
           });
            if(res.status == 200){
-            window.alert(res.data);
+            window.alert(res.data.message);
             handleRender();
+            handleClose();
             return;
            }
            } catch (e) {
@@ -120,7 +121,7 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
                                 <Grid2 md={6} xs={12}>
                                     <FormControl fullWidth required>
                                         <InputLabel>Personal Number</InputLabel>
-                                        <OutlinedInput type='Number' defaultValue={newContact.personalNumber} onChange={handleInputChange} value={newContact.personalNumber} label="Personal Phone Number" name="personalPhoneNumber" />
+                                        <OutlinedInput type='Number' defaultValue={newContact.personalPhoneNumber} onChange={handleInputChange} value={newContact.personalNumber} label="Personal Phone Number" name="personalPhoneNumber" />
                                     </FormControl>
                                 </Grid2>
                                 <Grid2 md={6} xs={12}>

@@ -67,8 +67,8 @@ const DeleteConfirmationModal = ({ open, handleRender,handleClose,ContactId }) =
                                   
                      
                         <CardActions sx={{ justifyContent: 'flex-end' }}>
-                            <Button onClick={handleClose} variant="contained">Cancel</Button>
-                            <Button onClick={DeleteContact} variant="contained">Delete Contact</Button>
+                            <Button  onClick={handleClose} variant="contained">Cancel</Button>
+                            <Button sx={{backgroundColor:'red'}} onClick={DeleteContact} variant="contained">Delete Contact</Button>
                         </CardActions>
                     </Card>
                 </form>

@@ -125,7 +125,7 @@ export default function ContactPage() {
                                 <p>Phone Number: {contact.homePhoneNumber}</p>
                                 <p>Title: {contact.title}</p>
                                 <Stack spacing={2} direction="row">
-                                    <CustomizedButtons OnClickHandle={() => handleOpen3(contact.profileId)} text="Delete" />
+                                    <Button sx={{backgroundColor:'red'}} variant="contained" onClick={() => handleOpen3(contact.profileId)} >Delete</Button>
                                     <CustomizedButtons OnClickHandle={() => handleOpen2(contact)} text="Update" />
                                 </Stack>
                             </Card>

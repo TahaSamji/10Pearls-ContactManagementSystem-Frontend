@@ -26,7 +26,7 @@ export default function ProfilePage() {
             <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
                 <Stack direction="column" alignItems="center" spacing={2}>
                     <img style={{ height: 150, maxWidth: '100%', objectFit: 'cover' }} src={Logo} alt="Profile Logo" />
-                    <Typography variant="h5">Full Name: {details.fullName}</Typography>
+                    <Typography variant="h5">Full Name: {details.name}</Typography>
                     <Typography variant="h5">Email: {details.email}</Typography>
                 </Stack>
             </Box>

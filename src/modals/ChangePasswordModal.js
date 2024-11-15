@@ -6,10 +6,9 @@ import { useSelector } from 'react-redux';
 
 const ChangePasswordModal = ({ open, handleClose }) => {
     const [form, setformData] = useState({
-        OldPassword: "",
-        NewPassword: ""
+        oldPassword: "",
+        newPassword: ""
     });
-    const [error, seterror] = useState("gj");
     const token = useSelector((state) => state.user.token);
 
     useEffect(() => {
@@ -77,9 +76,9 @@ const ChangePasswordModal = ({ open, handleClose }) => {
                                     <FormControl fullWidth required>
                                         <InputLabel>Old Password</InputLabel>
                                         <OutlinedInput
-                                            value={form.OldPassword}
+                                            value={form.oldPassword}
                                             label="Old Password"
-                                            name="OldPassword"
+                                            name="oldPassword"
                                             type='password'
                                             onChange={handleInputChange}
                                         />
@@ -89,9 +88,9 @@ const ChangePasswordModal = ({ open, handleClose }) => {
                                     <FormControl fullWidth required>
                                         <InputLabel>New Password</InputLabel>
                                         <OutlinedInput
-                                            value={form.NewPassword}
+                                            value={form.newPassword}
                                             label="New Password"
-                                            name="NewPassword"
+                                            name="newPassword"
                                             type='password'
                                             onChange={handleInputChange}
                                         />

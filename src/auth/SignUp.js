@@ -77,11 +77,7 @@ export default function SignUp() {
               });
                 
               if (res.status === 200){
-                window.alert(res.data);
-        
-                console.log(res.data);
-                // getprofile(res.data.token);
-                
+                window.alert(res.data.message);    
               
               return; 
             }

@@ -60,9 +60,6 @@ export default function SignIn() {
           window.alert("Please enter credentials");
           return;
         }
-       
-       
-      
           event.preventDefault();
           const res = await axios({
             
@@ -71,24 +68,19 @@ export default function SignIn() {
             data: { email: data.email ,password:data.password },
           });
             
-          if (res.status === 200){
-            
+          if (res.status === 200){        
             console.log(res.data);
-            window.alert(res.data.message);
             localStorage.setItem('jwtToken', res.data.token);
             localStorage.setItem('userId', res.data.userId);
             dispatch(
              
                 {
                     type: LOGIN_USER,
-                    payload : {token:res.data.token,userDetails:{email:res.data.username,userId:res.data.userId}}
-               
-            
+                    payload : {token:res.data.token,userDetails:{email:res.data.email,userId:res.data.userId,name:res.data.name}}
             
           });
     
             nav("/");
-            
           
           return; 
         }
@@ -150,12 +142,6 @@ export default function SignIn() {
                    >
                        Sign In
                    </Button>
-                        {/* <Grid2 item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                        </Grid2> */}
                     </Grid2>
                    
                     <Grid2 container justifyContent="flex-end" marginTop={1}>
