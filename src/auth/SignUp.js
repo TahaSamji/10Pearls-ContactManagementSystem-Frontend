@@ -2,19 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid2, Link, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const PaperContainer = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(8),
@@ -38,6 +28,7 @@ const SubmitButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function SignUp() {
+        const nav = useNavigate();
         const [data, setData] = useState({
             email: "",
             password: "",
@@ -58,35 +49,48 @@ export default function SignUp() {
           };
     
           const SignUpSubmit = async (event) => {
-            console.log("f")
+            event.preventDefault(); 
             try {
-              
-            if(data.email === '' || data.password === '' || data.name === '' ){
-              window.alert("Please enter credentials");
-              return;
-            }
-           
-           
-          
-              event.preventDefault();
+             
+              if (data.email === '' || data.password === '' || data.name === '') {
+                toast.warn("Please fill in all fields!", {
+                  position: "top-right",
+                });
+                return;
+              }
+        
               const res = await axios({
-                
                 url: "http://localhost:8080/signup",
                 method: "post",
-                data: { email: data.email ,password:data.password,name:data.name },
+                data: { email: data.email, password: data.password, name: data.name },
               });
-                
-              if (res.status === 200){
-                window.alert(res.data.message);    
+          
               
-              return; 
-            }
-              
-            } catch (e) {
+              if (res.status === 200) {
+                toast.success(res.data.message, {
+                  position: "top-right",
+                  onClose:() => nav("/signin")
+                });
+
+               
+                return;
+              }
+            } catch (error) {
              
-              console.error(e);
+              if (error.response &&  error.response.data.message) {
+                toast.error(error.response.data.message, {
+                  position: "top-right",
+                });
+              } else {
+             
+                toast.error("An error occurred. Please try again later.", {
+                  position: "top-right",
+                });
+              }
+              console.error(error);
             }
           };
+          
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -164,6 +168,7 @@ export default function SignUp() {
             <Box mt={5}>
                 {/* <Copyright /> */}
             </Box>
+            <ToastContainer/>
         </Container>
     );
 }

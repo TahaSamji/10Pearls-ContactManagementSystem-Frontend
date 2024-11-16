@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Button, Modal, Typography, Card, Grid2,CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions } from '@mui/material';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 
 const ChangePasswordModal = ({ open, handleClose }) => {
     const [form, setformData] = useState({
@@ -35,13 +37,17 @@ const ChangePasswordModal = ({ open, handleClose }) => {
                     Authorization: `Bearer ${token}`
                 }
             }); 
-            window.alert(res.data.message);
             if (res.status === 200) {
-                window.alert(res.data.message);
-                handleClose();
+            handleClose()
+            toast.success(res.data.message, {
+              position: "top-right",
+            });
                 return;
             }         
-        } catch (e) {        
+        } catch (e) {  
+            toast.error(e.response.data.message, {
+                position: "top-right",
+              });      
             console.error(e);
         }
     };

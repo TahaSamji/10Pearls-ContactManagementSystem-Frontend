@@ -7,6 +7,8 @@ import { Box } from '@mui/material';
 // import { Project } from './projects';
 import { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 
 
 const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
@@ -58,16 +60,21 @@ const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
           });
 
            if(res.status == 200){
-            window.alert("Contact Update Succesfully")
-            console.log("update data",res.data);
             handleRender();
-            handleClose();
+            handleClose()
+            toast.success(res.data.message, {
+              position: "top-right",
+            });
             return;
 
            }}
          catch (e) {
-          window.alert("ERROR");
-          console.error(e);
+            handleClose()
+            toast.error(e.response.data.message, {
+                position: "top-right",
+                 
+              });     
+                   console.error(e);
         }
       };
 

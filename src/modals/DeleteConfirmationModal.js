@@ -6,6 +6,8 @@ import { Box } from '@mui/material';
 
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 
 
 const DeleteConfirmationModal = ({ open, handleRender,handleClose,ContactId }) => {
@@ -26,12 +28,19 @@ const DeleteConfirmationModal = ({ open, handleRender,handleClose,ContactId }) =
             headers: { Authorization: `Bearer ${token}` }
           });
           if (res.status === 200) {
-            window.alert("Contact Deleted Successfully");
-            handleClose();
             handleRender();
+            handleClose()
+            toast.success(res.data.message, {
+              position: "top-right",
+             
+            });
           }
         } catch (e) {
-          window.alert("ERROR");
+          handleClose()
+          toast.error(e.response.data.message, {
+            position: "top-right",
+   
+          });
           console.error(e);
         }
       };
@@ -62,10 +71,7 @@ const DeleteConfirmationModal = ({ open, handleRender,handleClose,ContactId }) =
                     <Card sx={{ p: 5 }}>
                         <CardHeader  title="Are you Sure you want to delete this contact?" />
                   
-                     
-
-                                  
-                     
+            
                         <CardActions sx={{ justifyContent: 'flex-end' }}>
                             <Button  onClick={handleClose} variant="contained">Cancel</Button>
                             <Button sx={{backgroundColor:'red'}} onClick={DeleteContact} variant="contained">Delete Contact</Button>

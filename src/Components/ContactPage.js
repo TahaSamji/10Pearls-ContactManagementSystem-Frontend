@@ -11,6 +11,7 @@ import ManIcon from '../assests/man.png';
 import ViewIcon from '../assests/eye.png';
 import ViewContactModal from "../modals/ViewContactModal";
 
+
 export default function ContactPage() {
     const [Contacts, setContacts] = useState([]);
     const [selectedContact, setselectedContact] = useState();

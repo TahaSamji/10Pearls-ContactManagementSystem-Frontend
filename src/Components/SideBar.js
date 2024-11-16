@@ -11,6 +11,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT_USER, PAGE_CHANGE } from '../redux/actions/UserAction';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+
 
 export default function SideBar() {
     const userId = useSelector((state) => state.user.userDetails.userId);
@@ -40,69 +42,96 @@ export default function SideBar() {
     };
     const ExportContact = async () => {
         try {
-            const res = await axios({
-                url: `http://localhost:8080/contactexport`,
-                method: "get",
-                params: {
-                    userId
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+          const res = await axios({
+            url: `http://localhost:8080/contactexport`,
+            method: "get",
+            params: {
+              userId,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+      
+          if (res.status === 200) {
+            toast.success("Contacts exported successfully!", {
+              position: "top-right",
             });
-
-            if (res.status === 200) {
-                window.alert("Contacts Have been Exported");
-                const a = document.createElement('a');
-                const file = new Blob([res.data], { type: 'text/vcard' });
-
-                a.href = URL.createObjectURL(file);
-                a.download = "Contacts.vcf";
-                a.click();
-
-                URL.revokeObjectURL(a.href);
-                return;
-            }
-        } catch (e) {
-            console.error(e);
+      
+            const a = document.createElement('a');
+            const file = new Blob([res.data], { type: 'text/vcard' });
+            a.href = URL.createObjectURL(file);
+            a.download = "Contacts.vcf";
+            a.click();
+            URL.revokeObjectURL(a.href);
+      
+            return;
+          }
+        } catch (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message, {
+              position: "top-right",
+            });
+          } else {
+            toast.error("An error occurred while exporting contacts.", {
+              position: "top-right",
+            });
+          }
+          console.error(error);
         }
-    };
+      };
+      
     const ImportContact = async (file) => {
         if (!file) {
-            console.error("No file selected");
-            return;
+          toast.warn("No file selected!", {
+            position: "top-right",
+          });
+          return;
         }
+      
         const formData = new FormData();
-
-        formData.append('file',file);
-        
-
+        formData.append('file', file);
+      
         try {
-            const res = await axios({
-                url: `http://localhost:8080/contactimport`,
-                method: "post",
-                params: {
-                    userId: userId
-                },
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                    Accept: "application/json",
-                },
-                data: formData
+          const res = await axios({
+            url: `http://localhost:8080/contactimport`,
+            method: "post",
+            params: {
+              userId,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+              Accept: "application/json",
+            },
+            data: formData,
+          });
+      
+          if (res.status === 200) {
+            toast.success( res.data.message, {
+              position: "top-right",
+              onClose:handleNavigatetoContactPage()
             });
-
-            if (res.status === 200) {
-                window.alert("Contacts have been imported successfully!");
-                handleNavigatetoContactPage();
-            }
-        } catch (e) {
-            console.error("Error importing contacts:", e);
+            
+            return;
+          }
+        } catch (error) {
+          if (error.response && error.response.data && error.response.data.message) {
+            toast.error(error.response.data.message, {
+              position: "top-right",
+            });
+          } else {
+            toast.error("An error occurred while importing contacts.", {
+              position: "top-right",
+            });
+          }
+          console.error("Error importing contacts");
         }
-    };
+      };
+      
 
     return (
-        <Box flex={1.5} sx={{ boxShadow: 4, minHeight: 700 }} bgcolor={'white'}>
+        <Box flex={1.5} sx={{ boxShadow: 4, minHeight: '100vh' }} bgcolor={'white'}>
             <List>
                 <img src={Logo} alt="Logo" style={{ padding: 10, width: '80%' }} />
                 <Divider sx={{ marginBottom: 2 }} />
@@ -157,6 +186,7 @@ export default function SideBar() {
                 </ListItem>
             </List>
             <Divider />
+            <ToastContainer/>
         </Box>
     );
 }

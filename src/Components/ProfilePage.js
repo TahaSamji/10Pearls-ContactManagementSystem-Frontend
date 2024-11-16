@@ -7,6 +7,8 @@ import { LOGOUT_USER } from "../redux/actions/UserAction";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "../modals/ChangePasswordModal";
 import { useState } from "react";
+import { toast, ToastContainer } from 'react-toastify';
+
 
 export default function ProfilePage() {
     const details = useSelector((state) => state.user.userDetails);
@@ -36,7 +38,7 @@ export default function ProfilePage() {
                 <CustomizedButtons OnClickHandle={handleLogout} text="Logout" />
             </Box>
 
-            <ChangePasswordModal open={open} handleClose={handleClose} />
+            <ChangePasswordModal  open={open} handleClose={handleClose} />
         </Box>
     );
 }

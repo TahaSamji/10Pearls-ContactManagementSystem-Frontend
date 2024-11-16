@@ -6,6 +6,11 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_USER } from '../redux/actions/UserAction';
+import { toast, ToastContainer } from 'react-toastify';
+
+
+
+
 
 
 
@@ -53,43 +58,53 @@ export default function SignIn() {
       };
 
       const loginSubmit = async (event) => {
-        console.log("f")
+        event.preventDefault(); 
         try {
-          
-        if(data.email === '' || data.password === ''){
-          window.alert("Please enter credentials");
-          return;
-        }
-          event.preventDefault();
+          if (data.email === '' || data.password === '') {
+            toast.warn("Please enter credentials!", {
+              position: "top-right",
+            });
+            return;
+          }
+      
           const res = await axios({
-            
             url: "http://localhost:8080/login",
             method: "post",
-            data: { email: data.email ,password:data.password },
+            data: { email: data.email, password: data.password },
           });
-            
-          if (res.status === 200){        
+      
+          if (res.status === 200) {
             console.log(res.data);
-            localStorage.setItem('jwtToken', res.data.token);
-            localStorage.setItem('userId', res.data.userId);
-            dispatch(
-             
-                {
-                    type: LOGIN_USER,
-                    payload : {token:res.data.token,userDetails:{email:res.data.email,userId:res.data.userId,name:res.data.name}}
-            
-          });
-    
-            nav("/");
-          
-          return; 
-        }
-          
-        } catch (e) {
-         
-          console.error(e);
+            localStorage.setItem("jwtToken", res.data.token);
+            localStorage.setItem("userId", res.data.userId);
+      
+            dispatch({
+              type: LOGIN_USER,
+              payload: {
+                token: res.data.token,
+                userDetails: { email: res.data.email, userId: res.data.userId, name: res.data.name },
+              },
+            });
+      
+  
+            nav("/")
+            return;
+          }
+        } catch (error) {
+          if (error.response  && error.response.data.message) {
+            toast.error(error.response.data.message, {
+              position: "top-right",
+            });
+          } else {
+       
+            toast.error("An error occurred. Please try again later.", {
+              position: "top-right",
+            });
+          }
+          console.error(error);
         }
       };
+      
 
       
     return (
@@ -154,6 +169,7 @@ export default function SignIn() {
                     </Grid2>
                 </Form>
             </PaperContainer>
+            <ToastContainer/>
             <Box mt={5}>
             </Box>
         </Container>
