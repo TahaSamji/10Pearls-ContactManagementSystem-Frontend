@@ -7,7 +7,6 @@ import { LOGOUT_USER } from "../redux/actions/UserAction";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordModal from "../modals/ChangePasswordModal";
 import { useState } from "react";
-import { toast, ToastContainer } from 'react-toastify';
 
 
 export default function ProfilePage() {

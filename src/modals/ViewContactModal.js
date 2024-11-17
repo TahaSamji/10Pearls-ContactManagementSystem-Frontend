@@ -1,9 +1,7 @@
-import axios from 'axios';
 import React from 'react';
-import { Button, Modal, Typography, Card, CardHeader, Divider, Grid, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
+import { Button, Modal, Card, CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
 import { Box } from '@mui/material';
-import { useEffect, useState, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { Stack } from '@mui/system';
 import ManIcon from '../assests/man.png';
 

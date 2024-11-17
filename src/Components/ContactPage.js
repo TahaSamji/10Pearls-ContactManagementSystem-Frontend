@@ -52,7 +52,12 @@ export default function ContactPage() {
     const handleRender = () => setisLoaded(!isLoaded);
 
     useEffect(() => { ShowContacts(); }, [])
-    useEffect(() => { ShowContacts(); }, [Search])
+    useEffect(() => { 
+        ShowContacts();
+     }, [Search])
+    
+
+   
 
     const handlepageChange = (value) => {
         console.log(value);

@@ -1,11 +1,9 @@
-// EditProjectModal.js
 import axios from 'axios';
 import React from 'react';
-import { Button, Modal, Typography, Card, CardHeader, Divider, Grid, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
+import { Button, Modal, Card, CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
 import { Box } from '@mui/material';
-// import { useAppSelector } from '@/app/Redux/store';
-// import { Project } from './projects';
-import { useEffect, useState } from 'react';
+
+import {  useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -24,15 +22,6 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
     });
     const token = useSelector((state) => state.user.token);
   
-
-
-
-    useEffect(() => {
-
-        console.log("this is Data", newContact);
-        console.log("this is token", token);
-    }, [newContact]);
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setNewContact((prevData) => ({
@@ -40,12 +29,27 @@ const AddContactModal = ({ open, handleRender,handleClose }) => {
             [name]: value,
         }));
     };
-
-
+   function  Valid(){
+    console.log(newContact.homePhoneNumber.toString().length);
+    if(newContact.homePhoneNumber.toString().length === 11 && newContact.personalPhoneNumber.toString().length === 11 && newContact.workPhoneNumber.toString().length === 11 ){
+      return true;
+    }else{
+        return false;
+    }
+   }
 
     const AddContact = async () => {
         try {
-            console.log(newContact);
+           const isValid =  Valid();
+           console.log(isValid);
+           if(isValid==false){
+            toast.error("Contacts must have 11 digits!", {
+                position: "top-right",
+             
+              });
+            return;
+           }
+        
           const res = await axios({
             url: `http://localhost:8080/addcontact`,
             method: "post",

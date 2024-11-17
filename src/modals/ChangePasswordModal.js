@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Button, Modal, Typography, Card, Grid2,CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions } from '@mui/material';
+import React, {  useState } from 'react';
+import { Button, Modal, Card, Grid2,CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions } from '@mui/material';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -12,11 +12,6 @@ const ChangePasswordModal = ({ open, handleClose }) => {
         newPassword: ""
     });
     const token = useSelector((state) => state.user.token);
-
-    useEffect(() => {
-        console.log("this is Data", form);
-        console.log("this is token", token);
-    }, [form]);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;

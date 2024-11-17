@@ -1,10 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducers/reducers';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user'],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 const store = configureStore({
-  reducer
+  reducer: persistedReducer, 
 });
 
-const persister = 'Free';
+const persistor = persistStore(store);
 
-export { store, persister };
+export { store, persistor };

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid2, Link, TextField, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, CssBaseline, Grid2, Link, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -19,7 +19,7 @@ const StyledAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const Form = styled('form')(({ theme }) => ({
-    width: '100%', // Fix IE 11 issue.
+    width: '100%', 
     marginTop: theme.spacing(3),
 }));
 
@@ -96,7 +96,7 @@ export default function SignUp() {
             <CssBaseline />
             <PaperContainer>
                 <StyledAvatar>
-                    {/* <LockOutlinedIcon /> */}
+                   
                 </StyledAvatar>
                 <Typography component="h1" variant="h5">
                     Sign up
@@ -168,7 +168,6 @@ export default function SignUp() {
             <Box mt={5}>
                 {/* <Copyright /> */}
             </Box>
-            <ToastContainer/>
         </Container>
     );
 }

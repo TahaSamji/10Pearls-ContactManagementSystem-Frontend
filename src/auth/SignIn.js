@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid2, Link, TextField, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Avatar, Box, Button, Container, CssBaseline, Grid2, Link, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Grid } from '@mui/system';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_USER } from '../redux/actions/UserAction';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 
@@ -44,11 +43,6 @@ export default function SignIn() {
       const dispatch = useDispatch();
       const nav = useNavigate();
 
-      useEffect(() => {
-    
-        console.log(data);
-      }, [data]);
-
       const handleInputChange = (event) => {
         const { name, value } = event.target;
         setData((prevData) => ({
@@ -74,9 +68,6 @@ export default function SignIn() {
           });
       
           if (res.status === 200) {
-            console.log(res.data);
-            localStorage.setItem("jwtToken", res.data.token);
-            localStorage.setItem("userId", res.data.userId);
       
             dispatch({
               type: LOGIN_USER,
@@ -169,7 +160,6 @@ export default function SignIn() {
                     </Grid2>
                 </Form>
             </PaperContainer>
-            <ToastContainer/>
             <Box mt={5}>
             </Box>
         </Container>

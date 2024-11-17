@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { AppBar, Box, TextField, Typography, InputAdornment, Stack, Button, Toolbar } from '@mui/material';
+import React, {  useState } from 'react';
+import { AppBar,  TextField, Stack, Button, Toolbar } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ProfileIcon from '../assests/profile.png';
 import BellIcon from '../assests/bell.png';
@@ -17,8 +17,7 @@ export default function NavBar() {
    
   }
   const SearchContact = ()=>{
-    console.log(value);
-
+   
     
     dispatch(
       {
@@ -47,7 +46,7 @@ export default function NavBar() {
             </Stack>
             <Stack alignItems={'self-end'} alignContent={'flex-end'} direction={'row'} >
 
-              {/* <Button>vhvh</Button> */}
+            
               <Button><img style={{width:30}} src={BellIcon}></img></Button>
               <Button><img style={{width:30}} src={ProfileIcon}></img></Button>
 

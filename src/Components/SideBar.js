@@ -7,11 +7,11 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Logo from '../assests/logo.png';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT_USER, PAGE_CHANGE } from '../redux/actions/UserAction';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 export default function SideBar() {
@@ -186,7 +186,6 @@ export default function SideBar() {
                 </ListItem>
             </List>
             <Divider />
-            <ToastContainer/>
         </Box>
     );
 }

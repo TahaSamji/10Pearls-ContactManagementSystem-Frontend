@@ -1,6 +1,3 @@
-
-
-// action - state management
 import * as actionTypes from '../actions/UserAction';
 
 
@@ -36,16 +33,7 @@ const userReducer = (state = initialState, action) => {
           ...action.payload,
           Search : action.payload.Search
         };
-      case 'UPDATE_USER_DETAILS':
-      return {
-        ...state,
-        userDetails: {
-          ...state.userDetails,
-          firstName: action.payload.firstName,
-          lastName: action.payload.lastName,
-         
-        },
-      };
+  
     case actionTypes.LOGOUT_USER:
       return {
         ...state,

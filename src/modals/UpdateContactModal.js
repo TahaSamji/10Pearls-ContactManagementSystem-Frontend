@@ -1,22 +1,20 @@
-// EditProjectModal.js
 import axios from 'axios';
 import React from 'react';
-import { Button, Modal, Typography, Card, CardHeader, Divider, Grid, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
+import { Button, Modal, Card, CardHeader, Divider, FormControl, InputLabel, OutlinedInput, CardContent, CardActions, Grid2 } from '@mui/material';
 import { Box } from '@mui/material';
-// import { useAppSelector } from '@/app/Redux/store';
-// import { Project } from './projects';
-import { useEffect, useState, ChangeEvent } from 'react';
+
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 
 
-const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
+const UpdateContactModal = ({ open, handleRender, handleClose, newdata }) => {
 
-    
-    
+
+
     const [data, SetNewData] = useState({
-        profileId : newdata.profileId,
+        profileId: newdata.profileId,
         firstName: newdata.firstName,
         lastName: newdata.lastName,
         workEmailAddress: newdata.workEmailAddress,
@@ -26,57 +24,75 @@ const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
         personalPhoneNumber: newdata.personalPhoneNumber,
         title: newdata.title
     });
-        useEffect(() => {
+    useEffect(() => {
 
-            console.log("this is Data", data);
-        }, [data]);
+        console.log("this is Data", data);
+    }, [data]);
 
-        const handleInputChange = (event) => {
-            const { name, value } = event.target;
-            SetNewData((prevData) => ({
-                ...prevData,
-                [name]: value,
-            }));
-        };  
-        
-        const token  = useSelector((state) => state.user.token);
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        SetNewData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
+    const token = useSelector((state) => state.user.token);
 
+    function Valid() {
+        if (data.homePhoneNumber.toString().length === 11 && data.personalPhoneNumber.toString().length === 11 && data.workPhoneNumber.toString().length === 11) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     const UpdateContact = async () => {
+
         try {
 
-          const res = await axios({
-
-            url: `http://localhost:8080/updatecontact`,
-            method: "post",
-            data:data,
-            params:{
-             contactId:data.profileId
-            },
-            headers: {
-              Authorization: `Bearer ${token}` // Send token in the Authorization header
+            const isValid =  Valid();
+            console.log(isValid);
+            if(isValid==false){
+             toast.error("Contacts must have 11 digits!", {
+                 position: "top-right",
+              
+               });
+             return;
             }
-          });
 
-           if(res.status == 200){
-            handleRender();
-            handleClose()
-            toast.success(res.data.message, {
-              position: "top-right",
+            const res = await axios({
+
+                url: `http://localhost:8080/updatecontact`,
+                method: "post",
+                data: data,
+                params: {
+                    contactId: data.profileId
+                },
+                headers: {
+                    Authorization: `Bearer ${token}` // Send token in the Authorization header
+                }
             });
-            return;
 
-           }}
-         catch (e) {
+            if (res.status == 200) {
+                handleRender();
+                handleClose()
+                toast.success(res.data.message || "Contact Updated Successfully", {
+                    position: "top-right",
+                });
+                return;
+
+            }
+        }
+        catch (e) {
             handleClose()
             toast.error(e.response.data.message, {
                 position: "top-right",
-                 
-              });     
-                   console.error(e);
+
+            });
+            console.error(e);
         }
-      };
+    };
 
 
     const style = {
@@ -102,8 +118,8 @@ const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
                 <form onSubmit={(event) => { event.preventDefault(); }}>
                     <Card sx={{ p: 5 }}>
                         <CardHeader subheader="The information can be edited" title="Edit Contact" />
-                         <Divider/>
-                         <CardContent>
+                        <Divider />
+                        <CardContent>
                             <Grid2 container spacing={3}>
                                 <Grid2 sx={{ marginBottom: 1 }} md={6} xs={12}>
                                     <FormControl fullWidth required>
@@ -160,13 +176,13 @@ const UpdateContactModal = ({ open,handleRender, handleClose,newdata }) => {
                                 </Grid2>
                             </Grid2>
                         </CardContent>
-                
-                                
-                          
+
+
+
                         <Divider />
                         <CardActions sx={{ justifyContent: 'flex-end' }}>
-                            <Button onClick={handleClose}  variant="contained">Cancel</Button>
-                            <Button  onClick={UpdateContact} variant="contained">Save Details</Button>
+                            <Button onClick={handleClose} variant="contained">Cancel</Button>
+                            <Button onClick={UpdateContact} variant="contained">Save Details</Button>
                         </CardActions>
                     </Card>
                 </form>
